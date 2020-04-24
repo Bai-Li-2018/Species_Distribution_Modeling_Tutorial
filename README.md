@@ -1,5 +1,5 @@
 # Species_Distribution_Modeling_Tutorial
-Here contains a few simple examples in species distribution modeling for class on 04/29/2020. 
+Here contains a few simple examples in species distribution modeling. 
 
 **Before you arrive:**  
 Please **make sure your R and Rstudio are installed**
