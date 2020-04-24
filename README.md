@@ -10,4 +10,14 @@ Please **make sure your R and Rstudio are installed**
 
 3. You can download (green clone or download zip button) this repositority directly to your computer.  
 
-4. The input data, code, output, and figure are saved in different folders. Feel free to explore it before the class. 
+4. The input data, code, output, and figure are saved in different folders. Feel free to explore it before the class.  
+
+5. Open "SDM_two_Stages.R" file with Rstudio.
+
+6. Modify line 23 to set your working directory:
+
+```R
+setwd("/Users/Bai/Google Drive/Bai/Forms/2020/UMAINE_Teaching_0429/Species_Distribution_Modelling_Tutorial")
+```
+
+7. Run the script.
