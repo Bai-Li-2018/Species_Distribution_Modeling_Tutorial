@@ -1,0 +1,5 @@
+"","Survey","TowNum","Region","Stratum","Scientific_name","Year","Unit_Len","Sex","Length","WeightedFreq","start_lat","start_lon","end_lat","end_lon"
+"140102","FL16",39,3,3,"Homarus americanus",2016,"MM","Female",999,1.11111,43.77425,-69.2214,43.76267,-69.21485
+"344540","SP17",75,4,3,"Homarus americanus",2017,"MM","Female",881,1,43.93212,-68.58768,43.94492,-68.59815
+"366894","SP18",80,4,3,"Homarus americanus",2018,"MM","Female",999,1,44.10772,-68.29552,44.0955,-68.28783
+"368381","SP18",90,4,2,"Homarus americanus",2018,"MM","Female",556,1,44.25415,-68.10147,44.26782,-68.09895
