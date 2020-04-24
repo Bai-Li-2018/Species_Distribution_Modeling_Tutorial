@@ -14,7 +14,7 @@ Please **make sure your R and Rstudio are installed**
 
 5. Open "SDM_two_stages.R" file with Rstudio.
 
-6. Modify line 23 to set your working directory:
+6. Modify line 23 to set up your working directory:
 
 ```R
 setwd("/Users/Bai/Google Drive/Bai/Forms/2020/UMAINE_Teaching_0429/Species_Distribution_Modelling_Tutorial")
