@@ -1,5 +1,5 @@
-# Species_Distribution_Modelling_Example
-This is a simple exercise in species distribution modeling for students at UMAINE on 04/29/2020. 
+# Species_Distribution_Modelling_Tutorial
+Here contains a few simple examples in species distribution modeling for class on 04/29/2020. 
 
 **Before you arrive:**  
 Please **make sure your R and Rstudio are installed**
@@ -8,4 +8,6 @@ Please **make sure your R and Rstudio are installed**
 
 2. Downlad [Rstudio](https://rstudio.com/products/rstudio/download/#download). 
 
-3. You can download (green clone or download button) this repositority (input data and code) directly to your computer.  
+3. You can download (green clone or download zip button) this repositority directly to your computer.  
+
+4. The input data, code, output, and figure are saved in different folders. 
