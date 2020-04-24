@@ -8,7 +8,7 @@ Please **make sure your R and Rstudio are installed**
 
 2. Downlad [Rstudio](https://rstudio.com/products/rstudio/download/#download). 
 
-3. You can download (green clone or download zip button) this repositority directly to your computer.  
+3. You can download (green download zip button above) this repositority directly to your computer.  
 
 4. The input data, code, output, and figure are saved in different folders. Feel free to explore it before the class.  
 
