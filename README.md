@@ -12,7 +12,7 @@ Please **make sure your R and Rstudio are installed**
 
 4. The input data, code, output, and figure are saved in different folders. Feel free to explore it before the class.  
 
-5. Open "SDM_two_Stages.R" file with Rstudio.
+5. Open "SDM_two_stages.R" file with Rstudio.
 
 6. Modify line 23 to set your working directory:
 
