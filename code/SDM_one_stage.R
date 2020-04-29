@@ -1,4 +1,4 @@
-setwd("/Users/Bai/Google Drive/Bai/Forms/2020/UMAINE_Teaching_0429/Species_Distribution_Modelling_Tutorial")
+setwd("/Users/Bai/Desktop/Species_Distribution_Modeling_Tutorial")
 #### Install and library packages ####
 list_of_packages <- c("maptools", "rgdal", "mgcv", "classInt","RColorBrewer","maps", "mapdata",  "mgcv", "raster", "SDMTools", "dplyr", "akima", "viridis", "sp", "rgeos")
 new_packages <- list_of_packages[!(list_of_packages %in% installed.packages()[,"Package"])]
@@ -20,6 +20,9 @@ library(sp)
 library(rgeos)
 #### Load bottom trawl survey data and map shapefile#### 
 load("./data/one_stage_trawl_survey.RData")
+head(lobster_catch_data)
+summary(lobster_catch_data)
+
 
 statistical_areas <- readShapePoly("./data/gis/Statistical_Areas_2010.shp", proj4string=CRS("+proj=longlat +datum=WGS84"))
 sa511_513 <- statistical_areas[which(statistical_areas@data$Id %in% c(511:513)),]
@@ -190,8 +193,9 @@ plot.new()
 legend("left", legend=c(names(attr(colcode, "table"))), fill=c(attr(colcode, "palette")), cex=0.9, bty="n", title="Depth (Fathom)")
 dev.off()
 
-#### Seasonal GAM ####
+#### GAM ####
 summary(lobster_catch_data$juv_num)
+hist(lobster_catch_data$juv_num)
 trawl_points <- SpatialPoints(cbind(lobster_catch_data$end_lon, lobster_catch_data$end_lat), proj4string=CRS("+proj=longlat +datum=WGS84")) 
 polygon_points <- over(trawl_points , sa511_513)
 
@@ -279,6 +283,7 @@ colnames(grid_data) <-c("lon", "lat")
 grid_data <- grid_data[which(grid_data$lat>42.9),]
 
 #### Download depth data ####
+## Download ARC ASCII from https://www.ngdc.noaa.gov/mgg/coastal/grddas01/grddas01.htm
 depth_raster <- raster("./data/gis/ne_atl_crm_v1.asc")
 #grid_data$depth <- extract.data(grid_data, depth_raster)
 grid_data$depth <- raster::extract(depth_raster, grid_data)

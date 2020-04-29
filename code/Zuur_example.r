@@ -21,9 +21,9 @@ if(length(new_packages)) install.packages(new_packages)
 #remotes::install_github("romunov/AED")
 library(AED)
 library(car)
-setwd("/Users/Bai/Google Drive/Bai/Forms/2020/UMAINE_Teaching_0429/Species_Distribution_Modelling_Tutorial/data")
+setwd("/Users/Bai/Desktop/Species_Distribution_Modeling_Tutorial")
 
-Loyn <- read.table(file = "./Loyn.txt", header=TRUE, dec = ".")  
+Loyn <- read.table(file = "./data/Loyn.txt", header=TRUE, dec = ".")  
 Loyn$fGRAZE <- factor(Loyn$GRAZE)
 
 op<- par(mfrow=c(4,2),mar=c(3,3,3,1))
@@ -125,7 +125,6 @@ step(M1)
 M3 <- lm(ABUND ~ L.AREA + fGRAZE, data = Loyn)
 op <- par(mfrow = c(2, 2))
 plot(M3) #standard graphical output
-win.graph()
 op <- par(mfrow = c(2, 2))
 #Check for normality
 E <- rstandard(M3)

@@ -20,7 +20,7 @@ library(classInt)
 library(fields)
 
 #### Set working directory and library required packages ####
-setwd("/Users/Bai/Google Drive/Bai/Forms/2020/UMAINE_Teaching_0429/Species_Distribution_Modelling_Tutorial")
+setwd("/Users/Bai/Desktop/Species_Distribution_Modeling_Tutorial")
 
 mndata<-read.csv('./data/two_stages_trawl_survey.csv') # Read Maine-New Hampshier Bottom Trawl Survey data. Lobster (< 60 mm CL) abundance/ habitat variables (Bottom water temperature/ Salinity/ Sediment Type/ Latitude/ Longitude/ Depth/ Distance Offshore/ Distance to Sediment Boundary). There are 473 observations. 
 
@@ -116,7 +116,7 @@ text(2, 6.5, expression(bold(italic(y) == 0.65 + 0.86 %.% italic(x)*","~~italic(
 prepresence = predict.gam(presence.sig, predictiondata, se.fit=TRUE, type = "response") # Fit first stage GAM with potential sampling station data
 p.presence = as.matrix(prepresence$fit) # Presence values of lobsters at potential sampling stations 
 p.presencevar = as.matrix(prepresence$se.fit^2) # Associated variance of presence after fitting model
-preabundance=predict.gam(abundance.sig, potentialdata, se.fit=TRUE) # Fit second stage GAM with potential sampling station data
+preabundance=predict.gam(abundance.sig, predictiondata, se.fit=TRUE) # Fit second stage GAM with potential sampling station data
 p.abundance=as.matrix(preabundance$fit) # Abundance values of lobsters at potential sampling stations
 p.abundancevar=as.matrix(preabundance$se.fit^2) # Associated variance of abundance after fitting model
 
@@ -129,6 +129,6 @@ colors <- brewer.pal(9, "YlOrRd")
 colbrks<-classIntervals(simabundance, n=9, style="quantile")
 brks<- colbrks$brks
 par(mfrow=c(1,1)); par(mar=c(4,4,1,1))
-plot(potentialdata$Longitude, potentialdata$Latitude, col=colors[findInterval(simabundance, brks ,all.inside=TRUE)], pch = 20, xlab="Longitude", ylab="Latitude")
+plot(predictiondata$Longitude, predictiondata$Latitude, col=colors[findInterval(simabundance, brks ,all.inside=TRUE)], pch = 20, xlab="Longitude", ylab="Latitude")
 
 
