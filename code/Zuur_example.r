@@ -37,7 +37,7 @@ dotchart(Loyn$ALT,main="ALT",group=Loyn$fGRAZE)
 dotchart(Loyn$GRAZE,main="GRAZE",group=Loyn$fGRAZE)
 par(op)
 
-
+Loyn[which(Loyn$AREA>900),]
 
 Loyn$L.AREA<-log10(Loyn$AREA)
 Loyn$L.DIST<-log10(Loyn$DIST)
@@ -47,13 +47,34 @@ Loyn$L.LDIST<-log10(Loyn$LDIST)
 Z<-cbind(Loyn$ABUND,Loyn$L.AREA,Loyn$L.DIST,Loyn$L.LDIST,Loyn$YR.ISOL,Loyn$ALT,Loyn$GRAZE)
 colnames(Z)<-c("ABUND","L.AREA","L.DIST","L.LDIST","YR.ISOL","ALT","GRAZE")
 pairs(Z)
+?pairs
+panel.hist <- function(x, ...)
+{
+    usr <- par("usr"); on.exit(par(usr))
+    par(usr = c(usr[1:2], 0, 1.5) )
+    h <- hist(x, plot = FALSE)
+    breaks <- h$breaks; nB <- length(breaks)
+    y <- h$counts; y <- y/max(y)
+    rect(breaks[-nB], 0, breaks[-1], y, col = "cyan", ...)
+}
+panel.cor <- function(x, y, digits = 2, prefix = "", cex.cor, ...)
+{
+    usr <- par("usr"); on.exit(par(usr))
+    par(usr = c(0, 1, 0, 1))
+    r <- abs(cor(x, y))
+    txt <- format(c(r, 0.123456789), digits = digits)[1]
+    txt <- paste0(prefix, txt)
+    if(missing(cex.cor)) cex.cor <- 0.8/strwidth(txt)
+    text(0.5, 0.5, txt, cex = cex.cor * r)
+}
+pairs(Z, panel=panel.smooth, diag.panel = panel.hist, upper.panel = panel.cor)
+
 
 M1 <- lm(ABUND ~ L.AREA + L.DIST + L.LDIST + YR.ISOL + ALT +
      fGRAZE, data = Loyn)
 vif(M1)
 
 summary(M1)
-anova(M1)
 drop1(M1,test="F")
 
 #Verify drop1
@@ -72,54 +93,6 @@ anova(M1A,M1B)
 #  Res.Df     RSS Df Sum of Sq      F   Pr(>F)
 #1     46 1714.43
 #2     47 2484.44 -1   -770.01 20.660 3.97e-05 ***
-
-((2484.44-1714.43)/1) / (1714.43/(56-9))
-
-
-
-
-#Verify anova table
-M1A <- lm(ABUND ~ L.AREA + L.DIST + L.LDIST + YR.ISOL + ALT +
-          fGRAZE, data = Loyn)
-
-M1B <- lm(ABUND ~ L.AREA + L.DIST + L.LDIST + YR.ISOL ,
-          data = Loyn)
-anova(M1A,M1B)
-
-M1C <- lm(ABUND ~ 1, data = Loyn)
-anova(M1C)
-
-
-M1C <- lm(ABUND ~ fGRAZE+L.AREA + L.DIST + L.LDIST + YR.ISOL + ALT, data = Loyn)
-anova(M1A)
-anova(M1C)
-
-
-#Model 1: ABUND ~ L.AREA
-#Model 2: ABUND ~ L.AREA + L.DIST
-#  Res.Df     RSS Df Sum of Sq      F Pr(>F)
-#1     54 2866.94
-#2     53 2801.47  1     65.48 1.2388 0.2707
-
-((2866.94-2801.47)/1) / (2801.47/(56-3))
-#ok
-
-
-
-#Analysis of Variance Table
-#
-#Response: ABUND
-#          Df Sum Sq Mean Sq F value    Pr(>F)
-#L.AREA     1 3471.0  3471.0 93.1303 1.247e-12 ***
-#L.DIST     1   65.5    65.5  1.7568  0.191565
-
-
-
-
-
-M2 <- lm(ABUND ~ L.AREA + L.DIST + L.LDIST + YR.ISOL + ALT, data = Loyn)
-anova(M1, M2)
-step(M1)
 
 
 M3 <- lm(ABUND ~ L.AREA + fGRAZE, data = Loyn)
@@ -140,7 +113,7 @@ par(op)
 
 
 
-plot(Loyn$L.AREA,Loyn$ABUND)
+
 #Loyn$SL.AREA<-sort(Loyn$L.AREA)
 D1<-data.frame(L.AREA=Loyn$L.AREA[Loyn$GRAZE==1],fGRAZE="1")
 D2<-data.frame(L.AREA=Loyn$L.AREA[Loyn$GRAZE==2],fGRAZE="2")
@@ -159,14 +132,12 @@ D1<-data.frame(L.AREA = Loyn$L.AREA, fGRAZE = "1")
 P1<-predict(M3, newdata = D1)
 
 
-
+plot(Loyn$L.AREA,Loyn$ABUND)
 lines(D1$L.AREA,P1,lty=1)
 lines(D2$L.AREA,P2,lty=2)
 lines(D3$L.AREA,P3,lty=3)
 lines(D4$L.AREA,P4,lty=4)
 lines(D5$L.AREA,P5,lty=5)
-
-
 
 
 library(mgcv)
@@ -180,19 +151,17 @@ AM2<-gam(ABUND ~ s(L.AREA, bs = "cs") + s(L.DIST, bs = "cs") +
                  s(ALT, bs = "cs") + fGRAZE, data = Loyn)
 anova(AM2)
 
-
-
 AM3 <- gam(ABUND ~ s(L.AREA, bs = "cs") + fGRAZE, data = Loyn)
 plot(AM3)
 
 
 E.AM3 <- resid(AM3)
 Fit.AM3 <- fitted(AM3)
-plot(x = Fit.AM3, y = E.AM3, xlab = "Fitted values",
-       ylab = "Residuals")
-
-
-
+scatter.smooth(Fit.AM3, E.AM3, xlab = "Fitted values",
+               ylab = "Residuals")
+legend("bottomleft", "GAM")
+scatter.smooth(M3$fitted.values, M3$residuals, xlab = "Fitted values", ylab = "Residuals")
+legend("bottomleft", "LM")
 
 M3<-lm(ABUND ~ L.AREA + fGRAZE, data = Loyn)
 AM3<-gam(ABUND ~ s(L.AREA, bs = "cs") + fGRAZE, data = Loyn)
